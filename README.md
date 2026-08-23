@@ -4,17 +4,15 @@ Code accompanying the *Scientific Data* Data Descriptor for three Chinese
 lexical-decision EEG experiments: masked 50-ms primes, unmasked 50-ms primes,
 and unmasked 200-ms primes.
 
-This repository has one deliberately narrow role: convert the preserved
-BrainVision recordings and behavioral workbooks into the trial-resolved JSON
-derivatives used by downstream analyses. The raw EEG, behavioral data,
-EEG-BIDS conversion/validation workflow, quality-control records, and frozen
-data release are not included in this source snapshot and must be deposited
-separately before submission.
+This repository builds and audits the multi-experiment EEG-BIDS release
+described in the manuscript. It also retains the original experiment-specific
+preprocessing scripts for historical/JML derivatives.
 
 ## Repository layout
 
 ```text
 src/preprocessing/       experiment-specific preprocessing scripts
+src/release/             BIDS build, validation, QC and checksum tools
 data/README.md           expected local input/output layout
 requirements.txt         Python dependencies
 ```
@@ -29,8 +27,9 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-Place the data as described in `data/README.md`, then run from the repository
-root:
+For the complete release pipeline, follow `WORKFLOW.md`. Place the data as
+described in `data/README.md`. The historical analysis derivatives can be
+generated from the repository root with:
 
 ```bash
 python -m src.preprocessing.preprocess_exp1
@@ -44,11 +43,11 @@ criterion, and exclusion of incorrect lexical decisions. It writes
 `data/results/expN_u2erp.json` with trial identifiers, RT, accuracy, validity
 flags, ROI window means, and averaged waveforms.
 
-Important: these scripts preserve the analysis pipeline represented in the
-working materials. They do not yet constitute the complete EEG-BIDS release
-workflow claimed by the Data Descriptor. BIDS conversion, validator output,
-checksums, provenance, a data dictionary, and repository-derived QC summaries
-must be added when the frozen data snapshot exists.
+The release code covers BIDS construction, event/behavior linking, provenance
+mapping, data dictionary generation, internal validation, EEG QC, overlap
+counts, and SHA-256 manifests. Author-dependent blockers are enumerated in
+`WORKFLOW.md`; the software does not fabricate unavailable ethics, acquisition,
+demographic, licensing, authorship, or DOI information.
 
 ## Citation and license
 
