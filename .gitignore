@@ -1,0 +1,9 @@
+.DS_Store
+.venv/
+__pycache__/
+*.py[cod]
+data/exp1/
+data/exp2/
+data/exp3/
+data/results/
+
